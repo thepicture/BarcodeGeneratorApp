@@ -1,0 +1,39 @@
+﻿<Window x:Class="BarcodeGeneratorApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:barcodes="clr-namespace:DevExpress.BarCodes;assembly=DevExpress.Docs.v22.1"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:BarcodeGeneratorApp"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="450"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="Symbologies"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="{x:Type barcodes:Symbology}" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="2">
+            <TextBox Name="BarcodeBox"
+                     TextChanged="OnTextChanged" />
+            <ComboBox ItemsSource="{Binding Source={StaticResource Symbologies}}"
+                      SelectedIndex="0"
+                      SelectionChanged="OnSymbologyChanged"
+                      x:Name="ComboSymbologies" />
+        </UniformGrid>
+        <Image x:Name="BarCodeImage"
+               Grid.Row="1" />
+    </Grid>
+</Window>
